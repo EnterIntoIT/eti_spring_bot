@@ -22,6 +22,7 @@ class CallbackApiHandler @Autowired constructor(
     fun handle(requestBody: HttpEntity<String>): String {
         val event = requestBody.body?.let { gson.fromJson(it, JsonObject::class.java) } ?: return "request body is null"
         when(event["type"].asString) {
+            "confirmation" -> TODO("нужно вернуть строку из настроек Callback API группы ВК")
             "message_new" -> messagesHandler.handle(gson.fromJson(event["object"], NewMessage::class.java))
             "audio_new" -> audioHandler.handleNewAudio(gson.fromJson(event["object"], NewAudio::class.java))
             else -> {}
